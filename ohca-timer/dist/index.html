@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OHCA 現場計時與紀錄器</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+<body>
+<main>
+  <header>
+    <h1>OHCA 現場計時與紀錄器</h1>
+    <div class="clocks"><div>現在 <strong id="clock">00:00:00</strong></div><div>經過 <strong id="elapsed">00:00</strong></div></div>
+    <nav aria-label="案件操作"><button id="rosc">ROSC</button><button id="arrival">到達醫院</button><button id="reset">新案件</button></nav>
+  </header>
+  <div id="dashboard">
+    <section class="actions" aria-label="快速紀錄">
+      <button class="tile drug-tile" id="epi"><span>Epinephrine</span><span class="drug-meta"><span class="drug-name">(強心針)</span><span class="drug-count"></span></span><strong></strong><small></small></button>
+      <button class="tile drug-tile" id="amio"><span>Amiodarone</span><span class="drug-meta"><span class="drug-name">(抗心律不整)</span><span class="drug-count"></span></span><strong></strong><small></small></button>
+      <button class="tile" id="iv"><span>IO/IV 建立</span><strong>紀錄時間</strong><small></small></button>
+      <button class="tile" id="rhythm"><span>心律分析</span><strong>紀錄分析</strong><small></small></button>
+    </section>
+    <section id="handover" hidden><h2>Epinephrine（強心針）下次給藥</h2><strong id="remaining"></strong><p id="expected"></p></section>
+    <section>
+      <h2>手動補登 / 新增紀錄</h2>
+      <form id="manual">
+        <div class="manual-controls">
+          <select id="kind" name="kind" aria-label="紀錄類型"></select>
+          <div class="manual-clock">
+            <div class="time-parts" role="group" aria-label="處置時間">
+              <select id="hour" aria-label="時"></select><span aria-hidden="true">:</span>
+              <select id="minute" aria-label="分"></select><span aria-hidden="true">:</span>
+              <select id="second" aria-label="秒"></select>
+            </div>
+            <button type="button" id="now">現在時間</button>
+          </div>
+          <button type="submit" class="primary">新增</button>
+        </div>
+        <div id="fields"></div>
+      </form>
+    </section>
+    <section class="record-panel" aria-labelledby="record-title">
+      <div class="record-heading"><h2 id="record-title">處置紀錄面板</h2><p class="muted">長按項目可刪除</p></div>
+      <dl id="summary"></dl>
+      <ol id="events"></ol>
+    </section>
+  </div>
+  <section id="timeline" hidden><h2>案件時序圖</h2><p class="muted">可點擊上方「回到面板」補登資料</p><ol id="timelineEvents"></ol></section>
+</main>
+<dialog id="rhythmDialog"><h2>心律分析紀錄</h2><div class="row" id="options"></div></dialog>
+<dialog id="medAlert" aria-labelledby="medAlertTitle" aria-describedby="medAlertStatus">
+  <h2 id="medAlertTitle"></h2>
+  <p id="medAlertStatus">時間到！</p>
+  <button id="medAlertAck" class="primary" type="button" autofocus>收到並關閉提示音</button>
+</dialog>
+</body>
+</html>
